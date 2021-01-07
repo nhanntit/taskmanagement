@@ -33,8 +33,8 @@ import javax.validation.groups.Default
 //    IN_PROGRESS,
 //    DONE;
 //}
-
-interface OnUpdate extends Default {}
+//TODO custom validate on update
+//interface OnUpdate extends Default {}
 
 @Entity
 @Table(name = "tasks")

@@ -21,24 +21,24 @@ import spock.lang.*
 class TaskControllerTest extends Specification{
     @Shared
     RESTClient client = new RESTClient('http://localhost:8080')
-    def "Should return 200"() {
-        when:
-            def response = client.get([ path: '/api/tasks'])
-        then:
-            with(response) {
-                status == 200
-                contentType == "application/json"
-            }
-    }
-//    def "maximum of two numbers"() {
-//        expect:
-//        Math.max(a, b) == c
-//
-//        where:
-//        a << [3, 5, 9]
-//        b << [7, 4, 9]
-//        c << [7, 5, 9]
+//    def "Should return 200"() {
+//        when:
+//            def response = client.get([ path: '/api/tasks'])
+//        then:
+//            with(response) {
+//                status == 200
+//                contentType == "application/json"
+//            }
 //    }
+    def "maximum of two numbers"() {
+        expect:
+        Math.max(a, b) == c
+
+        where:
+        a << [3, 5, 9]
+        b << [7, 4, 9]
+        c << [7, 5, 9]
+    }
 //    def "Should return 200 and success"() {
 //        when:
 //        def httpBuilder = new HTTPBuilder( "http://localhost:8080/api" )

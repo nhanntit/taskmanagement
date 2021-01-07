@@ -2,7 +2,9 @@ package com.tm.taskManagement.controller
 
 import com.tm.taskManagement.exception.ResourceNotFoundException
 import com.tm.taskManagement.model.Task
+import com.tm.taskManagement.model.TaskHistory
 import com.tm.taskManagement.model.User
+import com.tm.taskManagement.repository.TaskHistoryRepository
 import com.tm.taskManagement.repository.TaskRepository
 import com.tm.taskManagement.repository.UserRepository
 import groovyx.net.http.RESTClient
@@ -24,6 +26,9 @@ public class TaskController {
     @Autowired
     UserRepository userRepository
 
+    @Autowired
+    TaskHistoryRepository taskHistoryRepository
+
     @GetMapping("/tasks")
     List<Task> getAllTasks() {
         taskRepository.findAll();
@@ -31,7 +36,9 @@ public class TaskController {
 
     @PostMapping("/tasks")
     Task createTask(@Valid @RequestBody Task task) {
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+        addHistory(savedTask,"Admin adds this task")
+        savedTask
     }
 
     @PostMapping("/tasks/{id}/addsubtask")
@@ -39,7 +46,9 @@ public class TaskController {
         Task parentTask = taskRepository.findById(taskId)
                 .orElseThrow({ -> new ResourceNotFoundException("Task", "id", taskId) })
         task.setParentID(taskId)
-        taskRepository.save(task)
+        Task savedTask = taskRepository.save(task)
+        addHistory(savedTask,"Admin adds this subtask")
+        savedTask
     }
 
     @GetMapping("/tasks/{id}")
@@ -55,21 +64,31 @@ public class TaskController {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow({ -> new ResourceNotFoundException("Task", "id", taskId) })
 
+        String updatedInfo = ""
         if (taskDetails.getDescription()){
             task.setDescription(taskDetails.getDescription())
+            updatedInfo = "changed on description"
         }
         if (taskDetails.getPoint()) {
             task.setPoint(taskDetails.getPoint())
+            updatedInfo = String.format("changed point to %s",taskDetails.getPoint())
         }
         String progress = taskDetails.getProgress()
-        if (progress == "IN-PROGRESS") {
+        if (progress == "TODO") {
+            task.setProgress(progress)
+            updatedInfo = "changed progress to TODO"
+        }else if (progress == "IN-PROGRESS") {
             task.setProgress(progress)
             task.setStartDate(new Date())
+            updatedInfo = "changed progress to IN-PROGRESS"
         } else if (progress == "DONE") {
             task.setProgress(progress)
             task.setEndDate(new Date())
+            updatedInfo = "changed progress to DONE"
         }
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+        addHistory(savedTask,String.format("Admin updates this task, %s", updatedInfo))
+        savedTask
     }
 
     @DeleteMapping("/tasks/{id}")
@@ -92,7 +111,14 @@ public class TaskController {
         User user = userRepository.findById(userDetails.getId())
                 .orElseThrow({ -> new ResourceNotFoundException("User", "id", userDetails.getId()) });
         task.setAssignee(user);
-        taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+        addHistory(savedTask,"Admin change assignee of this task")
+        savedTask
     }
 
+    def addHistory(Task task, String content) {
+        TaskHistory history =  new TaskHistory("content":content)
+        history.setTask(task)
+        taskHistoryRepository.save(history)
+    }
 }

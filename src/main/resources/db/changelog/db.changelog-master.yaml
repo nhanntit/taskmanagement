@@ -1,0 +1,165 @@
+databaseChangeLog:
+- changeSet:
+    id: 1609990118845-1
+    author: Administrator (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            name: content
+            type: VARCHAR(1024)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+            name: task_id
+            type: BIGINT
+        tableName: history
+- changeSet:
+    id: 1609990118845-2
+    author: Administrator (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            name: content
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: created_at
+            type: datetime
+        - column:
+            name: title
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: updated_at
+            type: datetime
+        tableName: notes
+- changeSet:
+    id: 1609990118845-3
+    author: Administrator (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            name: description
+            type: VARCHAR(1024)
+        - column:
+            name: end_date
+            type: date
+        - column:
+            name: parentid
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: point
+            type: INT
+        - column:
+            name: progress
+            type: VARCHAR(255)
+        - column:
+            name: start_date
+            type: date
+        - column:
+            name: assignee_id
+            type: VARCHAR(255)
+        tableName: tasks
+- changeSet:
+    id: 1609990118845-4
+    author: Administrator (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: VARCHAR(30)
+        - column:
+            name: first_name
+            type: VARCHAR(100)
+        - column:
+            name: last_name
+            type: VARCHAR(100)
+        tableName: users
+- changeSet:
+    id: 1609990118845-5
+    author: Administrator (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: task_id
+        indexName: FK3bdfee6uhlnue80wnut3bvkpf
+        tableName: history
+- changeSet:
+    id: 1609990118845-6
+    author: Administrator (generated)
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: assignee_id
+        indexName: FKekr1dgiqktpyoip3qmp6lxsit
+        tableName: tasks
+- changeSet:
+    id: 1609990118845-7
+    author: Administrator (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: task_id
+        baseTableName: history
+        constraintName: FK3bdfee6uhlnue80wnut3bvkpf
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: CASCADE
+        onUpdate: RESTRICT
+        referencedColumnNames: id
+        referencedTableName: tasks
+        validate: true
+- changeSet:
+    id: 1609990118845-8
+    author: Administrator (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: assignee_id
+        baseTableName: tasks
+        constraintName: FKekr1dgiqktpyoip3qmp6lxsit
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: id
+        referencedTableName: users
+        validate: true
+
