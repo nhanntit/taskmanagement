@@ -11,24 +11,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 
-//import java.util.Date;
+//import java.util.Date
 
 @Entity
-@Table(name = "users")
-@EntityListeners(AuditingEntityListener.class)
-//@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Table(name = 'users')
+@EntityListeners(AuditingEntityListener)
 class User {
 
     @Id
     @Length(max = 30)
-    String id;
+    String id
 
     @NotBlank
     @Length(max = 100)
-    String first_name;
+    String first_name
 
     @NotBlank
     @Length(max = 100)
-    String last_name;
+    String last_name
 
 }

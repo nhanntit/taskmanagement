@@ -10,52 +10,53 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 import javax.persistence.Query
 
-//import java.util.List;
+//import java.util.List
 
 @RestController
-@RequestMapping("/api")
-public class UserController {
+@RequestMapping('/api')
+class UserController {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepository
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @GetMapping('/users')
+    List<User> getAllUsers() {
+        userRepository.findAll()
     }
 
-    @PostMapping("/users")
-    public User createUser(@Valid @RequestBody User user) {
-        return userRepository.save(user);
+    @PostMapping('/users')
+    User addUser(@Valid @RequestBody User user) {
+        userRepository.save(user)
     }
 
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable(value = "id") String userId) {
-        return userRepository.findById(userId)
-                .orElseThrow({ -> new ResourceNotFoundException("User", "id", userId) });
+    @GetMapping('/users/{id}')
+    User getUserById(@PathVariable(value = 'id') String userId) {
+        userRepository.findById(userId)
+                .orElseThrow({ -> new ResourceNotFoundException('User', 'id', userId) })
     }
 
-    @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable(value = "id") String userId,
+    @PutMapping('/users/{id}')
+    User updateUser(@PathVariable(value = 'id') String userId,
                            @Valid @RequestBody User userDetails) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow({ -> new ResourceNotFoundException("User", "id", userId) });
+                .orElseThrow({ -> new ResourceNotFoundException('User', 'id', userId) })
 
-        user.setFirst_name(userDetails.getFirst_name());
-        user.setLast_name(userDetails.getLast_name());
+        user.first_name = userDetails.first_name
+        user.last_name = userDetails.last_name
 
-        User updatedUser = userRepository.save(user);
-        return updatedUser;
+        User updatedUser = userRepository.save(user)
+        updatedUser
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") String userId) {
+    @DeleteMapping('/users/{id}')
+    ResponseEntity<?> deleteUser(@PathVariable(value = 'id') String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow({ -> new ResourceNotFoundException("User", "id", userId) });
+                .orElseThrow({ -> new ResourceNotFoundException('User', 'id', userId) })
 
-        userRepository.delete(user);
+        userRepository.delete(user)
 
-        return ResponseEntity.ok().build();
+        ResponseEntity.ok().build()
     }
+
 }

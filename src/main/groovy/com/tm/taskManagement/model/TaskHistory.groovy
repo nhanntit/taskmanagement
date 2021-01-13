@@ -6,8 +6,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
 //import org.hibernate.validator.constraints.Range
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 //import org.springframework.data.annotation.CreatedDate
 //import org.springframework.data.annotation.LastModifiedDate
 
@@ -18,19 +17,17 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import java.sql.Timestamp
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-//import java.util.Date;
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 @Entity
-@Table(name = "history")
-@EntityListeners(AuditingEntityListener.class)
-//@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Table(name = 'history')
+@EntityListeners(AuditingEntityListener)
 class TaskHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long id
 
     @NotBlank
     @Length(max = 1024)

@@ -26,49 +26,48 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 import javax.validation.groups.Default
 
-//import java.util.Date;
+//import java.util.Date
 
 //enum TaskStatus {
 //    TODO,
 //    IN_PROGRESS,
-//    DONE;
+//    DONE
 //}
 //TODO custom validate on update
 //interface OnUpdate extends Default {}
 
 @Entity
-@Table(name = "tasks")
-@EntityListeners(AuditingEntityListener.class)
-//@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@Table(name = 'tasks')
+@EntityListeners(AuditingEntityListener)
 class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long id
 
     @NotBlank
     @Length(max = 1024)
-    String description;
+    String description
 
 //    @Range(min = 1, max = 150)
-//    @Min(value = 1L,groups = OnUpdate.class)
-//    @Max(value = 5L, groups = OnUpdate.class)
+//    @Min(value = 1L,groups = OnUpdate)
+//    @Max(value = 5L, groups = OnUpdate)
     @Min(1L)
     @Max(5L)
-    int point;
+    int point
 
 //    @Enumerated(TaskStatus.STRING)
-    @Pattern(regexp = "TODO|IN-PROGRESS|DONE", flags = Pattern.Flag.CASE_INSENSITIVE)
+    @Pattern(regexp = 'TODO|IN-PROGRESS|DONE', flags = Pattern.Flag.CASE_INSENSITIVE)
     String progress
 
     @OneToOne
     User assignee
 
     @Temporal(TemporalType.DATE)
-    Date startDate;
+    Date startDate
 
     @Temporal(TemporalType.DATE)
-    Date endDate;
+    Date endDate
 
     Long parentID
 

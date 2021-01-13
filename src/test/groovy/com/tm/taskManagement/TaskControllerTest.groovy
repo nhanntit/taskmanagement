@@ -18,7 +18,8 @@ import spock.lang.*
 //)
 //@ActiveProfiles("test")
 //@ContextConfiguration
-class TaskControllerTest extends Specification{
+class TaskControllerTest extends Specification {
+
     @Shared
     RESTClient client = new RESTClient('http://localhost:8080')
 //    def "Should return 200"() {

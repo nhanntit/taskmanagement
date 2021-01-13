@@ -2,6 +2,8 @@ databaseChangeLog:
 - changeSet:
     id: 1609990118845-1
     author: Administrator (generated)
+#    preConditions:
+#        tableExists:
     changes:
     - createTable:
         columns:

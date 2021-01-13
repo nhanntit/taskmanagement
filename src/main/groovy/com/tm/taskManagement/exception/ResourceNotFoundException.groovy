@@ -1,30 +1,32 @@
 package com.tm.taskManagement.exception
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
-    private String resourceName;
-    private String fieldName;
-    private Object fieldValue;
+class ResourceNotFoundException extends RuntimeException {
 
-    public ResourceNotFoundException( String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
+    String resourceName
+    String fieldName
+    Object fieldValue
+
+    ResourceNotFoundException( String resourceName, String fieldName, Object fieldValue) {
+        super(String.format('%s not found with %s : %s', resourceName, fieldName, fieldValue))
+        this.resourceName = resourceName
+        this.fieldName = fieldName
+        this.fieldValue = fieldValue
     }
 
-    public String getResourceName() {
-        return resourceName;
+    String getResourceName() {
+        resourceName
     }
 
-    public String getFieldName() {
-        return fieldName;
+    String getFieldName() {
+        fieldName
     }
 
-    public Object getFieldValue() {
-        return fieldValue;
+    Object getFieldValue() {
+        fieldValue
     }
+
 }

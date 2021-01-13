@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.*
 
 import javax.validation.Valid
 
-//import java.util.List;
+//import java.util.List
 
 @RestController
-@RequestMapping("/api")
-public class TaskHistoryController {
+@RequestMapping('/api')
+class TaskHistoryController {
 
     @Autowired
-    TaskHistoryRepository taskHistoryRepository;
+    TaskHistoryRepository taskHistoryRepository
 
     @Autowired
-    TaskRepository taskRepository;
+    TaskRepository taskRepository
 
-    @GetMapping("/tasks/{id}/history")
-    List<TaskHistory> getAllTaskHistoryByTaskId(@PathVariable(value = "id") Long taskID) {
-        taskHistoryRepository.findByTaskIdOrderByCreatedAtDesc(taskID);
+    @GetMapping('/tasks/{id}/history')
+    List<TaskHistory> getAllTaskHistoryByTaskId(@PathVariable(value = 'id') Long taskID) {
+        taskHistoryRepository.findByTaskIdOrderByCreatedAtDesc(taskID)
     }
 
-//    @PostMapping("/tasks/{id}/history")
-//    Task addSubTask(@PathVariable(value = "id") Long taskId, @Valid @RequestBody TaskHistory taskHistory) {
+//    @PostMapping('/tasks/{id}/history')
+//    Task addSubTask(@PathVariable(value = 'id') Long taskId, @Valid @RequestBody TaskHistory taskHistory) {
 //        Task task = taskRepository.findById(taskId)
-//                .orElseThrow({ -> new ResourceNotFoundException("Task", "id", taskId) })
+//                .orElseThrow({ -> new ResourceNotFoundException('Task', 'id', taskId) })
 //        taskHistory.setTask(task)
 //        taskHistoryRepository.save(taskHistory)
 //    }
